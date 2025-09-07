@@ -1,8 +1,8 @@
-// app/components/Navbar.tsx
 "use client";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 type SessionUser = {
   name?: string | null;
@@ -18,16 +18,34 @@ type Session = {
 export default function Navbar() {
   const { data: session } = useSession() as { data: Session | null };
   const [showDropdown, setShowDropdown] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Tutup menu setiap kali pindah halaman
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   return (
     <nav className="navbar">
       {/* Kiri: Logo */}
       <div className="nav-logo">
-        <Link href="/" className="logo">e-Loak</Link>
+        <Link href="/" className="logo">
+          e-Loak
+        </Link>
       </div>
 
+      {/* Tombol Hamburger */}
+      <button
+        className="menu-toggle"
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu"
+      >
+        ☰
+      </button>
+
       {/* Tengah: Navigasi umum */}
-      <div className="nav-center">
+      <div className={`nav-center ${menuOpen ? "show" : ""}`}>
         <Link href="/">Home</Link>
         {session?.user?.role === "admin" ? (
           <>
@@ -36,16 +54,13 @@ export default function Navbar() {
           </>
         ) : (
           <>
-            
             <Link href="/products/books">Books</Link>
             <Link href="/products/stationery">Stationery</Link>
           </>
         )}
         <Link href="/about">About</Link>
-      </div>
 
-      {/* Kanan: Auth info */}
-      <div className="nav-right">
+        {/* Auth info (ikut menu di mobile juga) */}
         {session ? (
           <div
             className="user-menu"

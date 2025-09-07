@@ -4,15 +4,21 @@ body {
   font-family: Arial, sans-serif;
   background-color: #ffffff;
   color: #000000;
+  padding-top: 70px; /* sesuaikan dengan tinggi navbar */
 }
 
 /* === Navbar Styling Update === */
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* selalu di depan konten */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #000; /* black background */
+  background-color: #000;
   border-bottom: 1px solid #333;
   color: white;
 }
@@ -487,4 +493,84 @@ main h1 {
   font-weight: bold;
   color: #000;
   margin-top: 0.5rem;
+}
+
+/* === Responsive Navbar === */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .nav-center {
+    display: none; /* disembunyikan default */
+    flex-direction: column;
+    gap: 1rem;
+    background: #000;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .nav-center.show {
+    display: flex; /* muncul saat toggle aktif */
+  }
+
+  .nav-right {
+    display: none; /* auth tombol ikut masuk ke menu di mobile */
+  }
+
+  .menu-toggle {
+    display: block; /* hamburger muncul */
+  }
+}
+
+/* === Responsive Typography & Container === */
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .books-title,
+  .stationery-title,
+  .about-title {
+    font-size: 1.8rem;
+  }
+
+  .home-banner {
+    height: 200px;
+  }
+
+  .banner-text h1 {
+    font-size: 1.6rem;
+  }
+
+  .banner-text p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .books-container,
+  .stationery-container,
+  .home-container,
+  .about-container {
+    padding: 1rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th,
+  td {
+    padding: 6px;
+  }
 }
