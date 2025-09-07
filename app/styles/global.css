@@ -8,7 +8,6 @@ body {
 }
 
 /* === Navbar Styling Update === */
-/* === Navbar Styling Update === */
 .navbar {
   position: fixed;
   top: 0;
@@ -16,6 +15,7 @@ body {
   right: 0;
   z-index: 1000; /* selalu di depan konten */
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
   background-color: #000;
@@ -24,7 +24,7 @@ body {
 }
 
 .nav-logo {
-  flex: 0 0 auto; /* biar tetap kiri */
+  flex: 1;
 }
 
 .logo {
@@ -35,19 +35,15 @@ body {
   text-shadow: 0 0 5px white, 0 0 10px white;
 }
 
-/* Tengah */
 .nav-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  flex: 2;
   display: flex;
   justify-content: center;
   gap: 1.5rem;
 }
 
-/* Kanan */
 .nav-right {
-  margin-left: auto;
+  flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
