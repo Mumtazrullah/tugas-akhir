@@ -21,21 +21,20 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  // Tutup menu setiap kali pindah halaman
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
 
   return (
     <nav className="navbar">
-      {/* Kiri: Logo */}
+      {/* Logo */}
       <div className="nav-logo">
         <Link href="/" className="logo">
           e-Loak
         </Link>
       </div>
 
-      {/* Tombol Hamburger */}
+      {/* Hamburger (mobile only) */}
       <button
         className="menu-toggle"
         onClick={() => setMenuOpen(!menuOpen)}
@@ -44,7 +43,7 @@ export default function Navbar() {
         ☰
       </button>
 
-      {/* Tengah: Navigasi umum */}
+      {/* Menu Tengah */}
       <div className={`nav-center ${menuOpen ? "show" : ""}`}>
         <Link href="/">Home</Link>
         {session?.user?.role === "admin" ? (
@@ -60,8 +59,38 @@ export default function Navbar() {
         )}
         <Link href="/about">About</Link>
 
-        {/* Auth info (ikut menu di mobile juga) */}
-        {session ? (
+        {/* Auth khusus mobile */}
+        <div className="mobile-auth">
+          {!session ? (
+            <div className="mobile-auth-links">
+              <Link href="/auth/login">Login</Link>
+              <Link href="/auth/register">Register</Link>
+            </div>
+          ) : (
+            <div
+              className="user-menu"
+              onMouseEnter={() => setShowDropdown(true)}
+              onMouseLeave={() => setShowDropdown(false)}
+            >
+              <span className="user-email">{session.user?.email}</span>
+              {showDropdown && (
+                <div className="dropdown">
+                  <button onClick={() => signOut()}>Logout</button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Menu Kanan (desktop only) */}
+      <div className="nav-right">
+        {!session ? (
+          <>
+            <Link href="/auth/login">Login</Link>
+            <Link href="/auth/register">Register</Link>
+          </>
+        ) : (
           <div
             className="user-menu"
             onMouseEnter={() => setShowDropdown(true)}
@@ -74,11 +103,6 @@ export default function Navbar() {
               </div>
             )}
           </div>
-        ) : (
-          <>
-            <Link href="/auth/login">Login</Link>
-            <Link href="/auth/register">Register</Link>
-          </>
         )}
       </div>
     </nav>
